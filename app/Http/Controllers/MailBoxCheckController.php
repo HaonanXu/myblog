@@ -11,9 +11,10 @@ Class MailBoxCheckController extends BaseController
 {
     public function index(Request $request)
     {
-        $mailbox = new ImapMailbox('{imap.gmail.com:993/imap/ssl}INBOX', '*****', '*****', __DIR__);
+        $mailbox = new ImapMailbox('{imap.gmail.com:993/imap/ssl}INBOX', '***@gmail.com', 'password', __DIR__);
         $mailsIds = collect($mailbox->searchMailbox('UNSEEN'));
         $mails = $mailsIds->map(function ($mailId) use ($mailbox) {
+            dd($mailbox->getMail($mailId)->fromAddress);
             return $mailbox->getMail($mailId);
         });
     }
